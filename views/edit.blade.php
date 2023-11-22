@@ -269,47 +269,57 @@
 
                 // Format kodeJenis sesuai kebutuhan Anda
                 // var nomorUrut = ('000' + latestID).slice(-3);
-                var kodeJenis = kodeKategori + ' - ' + kodeKlasifikasi + ' - ' + ' - ' + tahunMesin;
+
+                // Test Solving : Saya akan komen semua ajax dibawah ini karena tidak diperlukan lagi, tidak perlu generate nomor urutan lagi karena, hanya memakai yang sudah terbuat.
+                let existingKodeJenis = $('#kode_jenis').val() // Ambil dulu value yang tersedia
+                existingKodeJenis = existingKodeJenis.split(' - ')[2] // Split dan ambil value index ke 2 untuk mengambil nomer urutnya saja 
+
+                // Lalu masukan dengan generate kode yang ada
+                // dan masukan variable existingKodeJenis ke barisan ke 3
+                var kodeJenis = `${kodeKategori} - ${kodeKlasifikasi} - ${existingKodeJenis} - ${tahunMesin}`
+
+                // Init ke element id kode_jenis
                 $('#kode_jenis').val(kodeJenis);
 
 
+
                 // Format kodeJenis sesuai kebutuhan Anda
-                $.ajax({
-                    url: "/get-latest-mesin-by-id/" + selectedKategori.val() + "/" + selectedKlasifikasi
-                        .val() + "/{{ $datamesin->id }}",
-                    method: "GET",
-                    success: function(response) {
+                // $.ajax({
+                //     url: "/get-latest-mesin-by-id/" + selectedKategori.val() + "/" + selectedKlasifikasi
+                //         .val() + "/{{ $datamesin->id }}",
+                //     method: "GET",
+                //     success: function(response) {
 
-                        if (response.latest == '') {
-                            // var nomorUrut = ('000' + latestID).slice(-3);
-                            var kodeJenis = kodeKategori + ' - ' + kodeKlasifikasi + ' - ' + '001' +
-                                ' - ' + tahunMesin;
-                            $('#kode_jenis').val(kodeJenis);
-                        } else {
-                            console.log('====================================');
-                            console.log(response.latest);
-                            console.log('====================================');
+                //         if (response.latest == '') {
+                //             // var nomorUrut = ('000' + latestID).slice(-3);
+                //             var kodeJenis = kodeKategori + ' - ' + kodeKlasifikasi + ' - ' + '001' +
+                //                 ' - ' + tahunMesin;
+                //             $('#kode_jenis').val(kodeJenis);
+                //         } else {
+                //             console.log('====================================');
+                //             console.log(response.latest);
+                //             console.log('====================================');
 
-                            var inputString = response.latest;
-                            var nextNomorUrut = incrementNomorUrut(inputString, response.current);
+                //             var inputString = response.latest;
+                //             var nextNomorUrut = incrementNomorUrut(inputString, response.current);
 
-                            // Membuat string baru dengan nomor urut yang telah diincrement
-                            var newString = inputString.replace(/(\d{3})/, nextNomorUrut);
+                //             // Membuat string baru dengan nomor urut yang telah diincrement
+                //             var newString = inputString.replace(/(\d{3})/, nextNomorUrut);
 
-                            var kodeJenis = kodeKategori + ' - ' + kodeKlasifikasi + ' - ' +
-                                nextNomorUrut + ' - ' + tahunMesin;
-                            $('#kode_jenis').val(kodeJenis);
+                //             var kodeJenis = kodeKategori + ' - ' + kodeKlasifikasi + ' - ' +
+                //                 nextNomorUrut + ' - ' + tahunMesin;
+                //             $('#kode_jenis').val(kodeJenis);
 
-                            // console.log(kodeJenis)
+                //             // console.log(kodeJenis)
 
-                            // $('#kode_jenis').val(kodeJenis);
+                //             // $('#kode_jenis').val(kodeJenis);
 
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Gagal mengambil ID terbaru: ' + error);
-                    }
-                });
+                //         }
+                //     },
+                //     error: function(xhr, status, error) {
+                //         console.error('Gagal mengambil ID terbaru: ' + error);
+                //     }
+                // });
             }
             /*
                     function incrementNomorUrut(inputString) {
